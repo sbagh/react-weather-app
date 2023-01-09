@@ -7,16 +7,16 @@ const api = {
 
 function App() {
    const [query, setQuery] = useState("");
-   const [weather, setWeather] = useState({});
-   // const [backgroundImage, setbackgroundImage] = useState("");
+   const [weather, setWeather] = useState({})
+   const [backgroundImage, setbackgroundImage] = useState('')
 
-   // useEffect(() => {
-   //    fetch("/image")
-   //       .then((response) => response.json())
-   //       .then((data) => {
-   //          setbackgroundImage(data);
-   //       });
-   // }, []);
+   useEffect(() => {
+      fetch("/image").then(
+         response => response.json()
+      ).then(data => {
+         setbackgroundImage(data)
+      })
+   },[])
 
    //function which takes the user searched city and fetches the weather results
    const search = (evt) => {
