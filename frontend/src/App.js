@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const api = {
    key: "8b94a4727a066da3ccd11a38b8e433a1",
@@ -6,10 +6,17 @@ const api = {
 };
 
 function App() {
-   //the required react states
    const [query, setQuery] = useState("");
-   const [weather, setWeather] = useState({});
+   const [weather, setWeather] = useState({})
+   const [backgroundImage, setbackgroundImage] = useState('')
 
+   useEffect(() => {
+      fetch("/image").then(
+         response => console.log(response);
+      ).then
+   })
+
+   //function which takes the user searched city and fetches the weather results
    const search = (evt) => {
       if (evt.key === "Enter") {
          fetch(`${api.base}weather?q=${query}&units=metric&&appid=${api.key}`)
@@ -69,14 +76,24 @@ function App() {
                   onKeyDown={search}
                />
             </div>
-            <div className="location-box">
-               <div className="location">{weather.name}</div>
-               <div className="date">{dateBuilder(new Date())}</div>
-            </div>
-            <div className="weather-box">
-               <div className="temperature"> {weather.main.temp}</div>
-               <div className="weather">Sunny</div>
-            </div>
+            {typeof weather.main != "undefined" ? (
+               <div>
+                  <div className="location-box">
+                     <div className="location">
+                        {weather.name}, {weather.sys.country}
+                     </div>
+                     <div className="date">{dateBuilder(new Date())}</div>
+                  </div>
+                  <div className="weather-box">
+                     <div className="temperature"> {weather.main.temp} °c</div>
+                     <div className="weather">
+                        {weather.weather[0].description}
+                     </div>
+                  </div>
+               </div>
+            ) : (
+               ""
+            )}
          </main>
       </div>
    );
